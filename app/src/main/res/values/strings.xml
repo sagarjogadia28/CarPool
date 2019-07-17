@@ -18,4 +18,10 @@
     <string name="register">Register</string>
     <string name="forget_password">Forget Password </string>
     <string name="credentials_missing">Credentials Missing</string>
+    <string name="enter_first_name">Enter First Name</string>
+    <string name="enter_last_name">Enter Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="Phone_no">Phone No. </string>
+    <string name="enter_email_id">Enter email id</string>
 </resources>

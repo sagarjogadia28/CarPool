@@ -7,14 +7,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.carpool.LoginAndRegistration.Login;
+import com.example.carpool.LoginAndRegistration.LoginFirebase;
 import com.example.carpool.OnBoarding.CustomIntro;
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         if(firebaseUser == null){
 
             //Not signed in start registration activity
-            startActivity(new Intent(this, Login.class));
+           // startActivity(new Intent(this, Login.class));
+
+            //Not signed in
+            startActivity(new Intent(this, LoginFirebase.class));
             finish();
         }
     }
