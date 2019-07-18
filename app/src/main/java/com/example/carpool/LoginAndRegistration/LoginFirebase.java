@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.carpool.FirstScreen;
 import com.example.carpool.ModelClasses.User;
@@ -30,6 +31,7 @@ public class LoginFirebase extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private static final int RC_SIGN_IN = 123;
     private List<User> userList;
+    private String TAG = "RegisterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +49,15 @@ public class LoginFirebase extends AppCompatActivity {
     private void startSignInAuthentication(){
 
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.PhoneBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build()
+                new AuthUI.IdpConfig.EmailBuilder().build()
+                //new AuthUI.IdpConfig.PhoneBuilder().build(),
+                //new AuthUI.IdpConfig.GoogleBuilder().build()
         );
 
         startActivityForResult(
                 AuthUI.getInstance()
                 .createSignInIntentBuilder()
-                .setIsSmartLockEnabled(false)
+                .setIsSmartLockEnabled(true)
                 .setAvailableProviders(providers)
                 .build(),
                 RC_SIGN_IN
@@ -69,10 +71,14 @@ public class LoginFirebase extends AppCompatActivity {
 
             checkRegistration();
 
+            Log.d(TAG, "onActivityResult: check");
+
         }
     }
 
     private void checkRegistration(){
+
+        Log.d(TAG, "checkRegistration: check1");
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -87,6 +93,30 @@ public class LoginFirebase extends AppCompatActivity {
         Query query = FirebaseDatabase.getInstance().getReference("User")
                 .orderByChild("userid")
                 .equalTo(firebaseUser.getUid());
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+
+                if (dataSnapshot.exists()){
+
+                    Log.e(TAG, "onDataChange: check2");
+                    startActivity(new Intent(LoginFirebase.this, FirstScreen.class));
+                    finish();
+                }
+                else {
+
+                    Log.e(TAG, "onDataChange: check3");
+                    startActivity(new Intent(LoginFirebase.this,RegisterActivity.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -94,10 +124,12 @@ public class LoginFirebase extends AppCompatActivity {
                 userList.clear();
 
                 if (dataSnapshot.exists()){
+                    Log.e(TAG, "onDataChange: check4");
                     startActivity(new Intent(LoginFirebase.this, FirstScreen.class));
                     finish();
                 }
                 else {
+                    Log.e(TAG, "onDataChange: check5");
                     startActivity(new Intent(LoginFirebase.this,RegisterActivity.class));
                 }
             }

@@ -24,4 +24,5 @@
     <string name="last_name">Last Name</string>
     <string name="Phone_no">Phone No. </string>
     <string name="enter_email_id">Enter email id</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         if(firebaseUser == null){
 
             //Not signed in start registration activity
-           // startActivity(new Intent(this, Login.class));
+           startActivity(new Intent(this, Login.class));
 
             //Not signed in
-            startActivity(new Intent(this, LoginFirebase.class));
+            //startActivity(new Intent(this, LoginFirebase.class));
             finish();
         }
     }
