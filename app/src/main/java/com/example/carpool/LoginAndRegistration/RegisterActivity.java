@@ -28,7 +28,10 @@ public class RegisterActivity extends AppCompatActivity {
     private MaterialButton registerButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private DatabaseReference userDatabase;
+    // Firebase database refrence
+    private FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mUserDatabase;
+
 
 
     @Override
@@ -48,7 +51,9 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        //userDatabase = FirebaseDatabase.getInstance().getReference("User");
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseDatabase.setPersistenceEnabled(true);
+      //  mUserDatabase = mFirebaseDatabase.getReference().child("Users");
 
         /*if (! TextUtils.isEmpty(firebaseUser.getEmail())){
 
@@ -72,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String phone = phoneEditText.getText().toString();
         String password = passowrdEditText.getText().toString();
         String confirmPassword = confirmPasswordEditText.getText().toString();
-        final String userId = email;
+        final String[] userId = {email};
 
         if ( ! TextUtils.isEmpty(fname)){
             if(! TextUtils.isEmpty(lname)){
@@ -93,8 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     else {
 
-                                        User user = new User(userId,fname,lname,email,phone);
-                                        //userDatabase.child(userId).setValue(user);
+                                        userId[0] = firebaseUser.getUid();
+
+                                        User user = new User(userId[0],fname,lname,email,phone);
+                                      //  mUserDatabase.child(userId[0]).setValue(user);
 
                                         startActivity(new Intent(RegisterActivity.this,FirstScreen.class));
                                         finish();

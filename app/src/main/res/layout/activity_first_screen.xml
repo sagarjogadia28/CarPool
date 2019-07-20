@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".FirstScreen">
 
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/first_screen_pager">
+    </androidx.viewpager.widget.ViewPager>
+
+    <androidx.viewpager.widget.PagerTabStrip
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/first_screen_pager_tab"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </androidx.viewpager.widget.PagerTabStrip>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
