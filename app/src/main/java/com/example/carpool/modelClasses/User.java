@@ -1,4 +1,4 @@
-package com.example.carpool.ModelClasses;
+package com.example.carpool.modelClasses;
 
 public class User {
 

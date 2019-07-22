@@ -1,4 +1,4 @@
-package com.example.carpool.FragmetScreens;
+package com.example.carpool.fragmetScreens;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carpool.R;
 
-public class ProfileFragment extends Fragment {
+public class WantRideFragment extends Fragment {
 
-    public ProfileFragment newinstance(int pos){
+    public static WantRideFragment newinstance(int pos){
 
         Bundle args = new Bundle();
         args.putInt("position",pos);
-        ProfileFragment fragment = new ProfileFragment();
+        WantRideFragment fragment = new WantRideFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -26,7 +26,8 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.profile_fragment_layout,container,false);
+
+        View v = inflater.inflate(R.layout.want_ride_fragment_layout,container,false);
 
         return v;
     }

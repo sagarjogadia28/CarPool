@@ -1,17 +1,16 @@
 package com.example.carpool;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Bundle;
-
-import com.example.carpool.FragmetScreens.GetRideFragment;
-import com.example.carpool.FragmetScreens.ProfileFragment;
-import com.example.carpool.FragmetScreens.WantRideFragment;
+import com.example.carpool.fragmetScreens.GetRideFragment;
+import com.example.carpool.fragmetScreens.ProfileFragment;
+import com.example.carpool.fragmetScreens.WantRideFragment;
 
 public class FirstScreen extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.carpool.OnBoarding;
+package com.example.carpool.onBoarding;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,11 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.palette.graphics.Palette;
 
 import com.example.carpool.Constants;

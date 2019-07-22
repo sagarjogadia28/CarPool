@@ -1,16 +1,72 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+    <!--    Full screen application theme-->
+    <style name="FullScreenTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:autofilledHighlight" tools:targetApi="o">@android:color/transparent
+        </item>
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="colorControlActivated">@android:color/transparent</item>
+    </style>
+
+    <!--    Splash screen theme-->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <!--    LoginActivity button style-->
+    <style name="LoginButtonStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">46dp</item>
+        <item name="android:layout_marginEnd">46dp</item>
+        <item name="android:paddingStart">64dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingEnd">64dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textColor">@color/blueBackground</item>
+    </style>
+
+    <!--    Sign up text input layout style-->
+    <style name="SignUpTextInputLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/blueBackground</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="boxCornerRadiusBottomEnd">20dp</item>
+        <item name="boxCornerRadiusBottomStart">20dp</item>
+        <item name="boxCornerRadiusTopEnd">20dp</item>
+        <item name="boxCornerRadiusTopStart">20dp</item>
+        <item name="endIconTint">@color/blueBackground</item>
+        <item name="hintTextColor">#000000</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginTop">124dp</item>
+    </style>
+
+    <!--    Sign up edit text style-->
+    <style name="SignUpTextInputEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/blueBackground</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>
