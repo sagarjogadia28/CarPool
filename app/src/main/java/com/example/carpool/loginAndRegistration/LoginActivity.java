@@ -2,9 +2,7 @@ package com.example.carpool.loginAndRegistration;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.carpool.FirstScreen;
 import com.example.carpool.R;
+import com.example.carpool.Utility;
 import com.example.carpool.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     public void submitEmailPassword() {
 
         if (binding.editTextEmail.getText() != null && binding.editTextPassword.getText() != null) {
-            String email = binding.editTextEmail.getText().toString();
-            String password = binding.editTextPassword.getText().toString();
+            String email = binding.editTextEmail.getText().toString().trim();
+            String password = binding.editTextPassword.getText().toString().trim();
 
             //Check whether email and password are not empty and in proper format
             if (!detailsValid(email, password))
@@ -64,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //Check both email and password satisfies the requirements
     private boolean detailsValid(String email, String password) {
 
         boolean valid = true;
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //Check if email is of correct format
-        if (!isValidEmail(email)) {
+        if (!Utility.isValidEmail(email)) {
             binding.editTextEmail.setError("Please enter email address in proper format");
             valid = false;
         }
@@ -93,10 +93,8 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-    }
 
+    //TODO: Implement forgot password flow
     public void forgotPassword() {
         Toast.makeText(this, "Forgot password clicked!!", Toast.LENGTH_SHORT).show();
     }
