@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/navigation_my_rides">
+
+    <fragment
+        android:id="@+id/navigation_my_rides"
+        android:name="com.example.carpool.fragmentScreens.MyRidesFragment"
+        android:label="fragment_my_rides"
+        tools:layout="@layout/fragment_my_rides" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.carpool.fragmentScreens.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_rides"
+        android:name="com.example.carpool.fragmentScreens.RidesFragment"
+        android:label="fragment_rides"
+        tools:layout="@layout/fragment_rides" />
+</navigation>

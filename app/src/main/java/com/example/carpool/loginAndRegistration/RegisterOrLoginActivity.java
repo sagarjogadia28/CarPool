@@ -87,6 +87,6 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
 
     //Called when the sign up button is clicked
     public void signUp() {
-        startActivity(new Intent(this, RegisterActivity.class));
+        startActivity(new Intent(this, SignUpActivity.class));
     }
 }

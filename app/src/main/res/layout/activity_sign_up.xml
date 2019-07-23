@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.carpool.loginAndRegistration.SignUpActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blueBackground"
+        tools:context=".loginAndRegistration.SignUpActivity">
+
+        <ImageView
+            android:id="@+id/img_user_profile"
+            android:onClick="@{() -> viewmodel.selectProfileImage()}"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:contentDescription="@string/profile_of_the_user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.089999974"
+            app:srcCompat="@drawable/user_placeholder" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_name"
+            style="@style/SignUpTextInputLayout"
+            android:layout_marginTop="64dp"
+            android:hint="@string/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_user_profile">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_name"
+                style="@style/SignUpTextInputEditText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_email"
+            style="@style/SignUpTextInputLayout"
+            android:layout_marginTop="8dp"
+            android:hint="@string/email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_layout_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_email"
+                style="@style/SignUpTextInputEditText" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_password"
+            style="@style/SignUpTextInputLayout"
+            android:layout_marginTop="8dp"
+            android:hint="@string/password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_layout_email"
+            app:passwordToggleEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_password"
+                style="@style/SignUpTextInputEditText"
+                android:inputType="textWebPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_reenter_password"
+            style="@style/SignUpTextInputLayout"
+            android:layout_marginTop="8dp"
+            android:hint="@string/re_enter_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_layout_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_reenter_password"
+                style="@style/SignUpTextInputEditText"
+                android:inputType="textWebPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_layout_phone_number"
+            style="@style/SignUpTextInputLayout"
+            android:layout_marginTop="8dp"
+            android:hint="@string/phone_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_layout_reenter_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_phone_number"
+                style="@style/SignUpTextInputEditText"
+                android:inputType="phone" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_submit"
+            android:onClick="@{() -> viewmodel.submitDetails()}"
+            style="@style/FabSubmitStyle"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_layout_phone_number" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

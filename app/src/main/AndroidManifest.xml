@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".loginAndRegistration.SignUpActivity" />
         <activity android:name=".loginAndRegistration.RegisterOrLoginActivity" />
         <activity
             android:name=".SplashActivity"
@@ -23,7 +24,6 @@
         </activity>
         <activity android:name=".loginAndRegistration.LoginFirebase" />
         <activity android:name=".FirstScreen" />
-        <activity android:name=".loginAndRegistration.RegisterActivity" />
         <activity android:name=".loginAndRegistration.LoginActivity" />
         <activity android:name=".onBoarding.CustomIntro" />
         <activity android:name=".MainActivity" />

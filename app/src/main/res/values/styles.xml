@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:autofilledHighlight" tools:targetApi="o">@android:color/transparent
+        </item>
     </style>
 
     <!--    Full screen application theme-->
@@ -67,6 +69,17 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/blueBackground</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FabSubmitStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="backgroundTint">@color/green</item>
+        <item name="fabCustomSize">72dp</item>
+        <item name="srcCompat">@drawable/ic_check</item>
     </style>
 
 </resources>

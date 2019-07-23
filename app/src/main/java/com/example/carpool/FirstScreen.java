@@ -3,52 +3,27 @@ package com.example.carpool;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
-import com.example.carpool.fragmetScreens.GetRideFragment;
-import com.example.carpool.fragmetScreens.ProfileFragment;
-import com.example.carpool.fragmetScreens.WantRideFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class FirstScreen extends AppCompatActivity {
-
-    public static int count = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        ViewPager viewPager = findViewById(R.id.first_screen_pager);
+        //Set default tab to MyRidesFragment
+        bottomNavigationView.setSelectedItemId(R.id.navigation_my_rides);
 
-        viewPagerAdapter viewPagerAdapter = new viewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
-
-
-    }
-
-    class viewPagerAdapter extends FragmentPagerAdapter{
+        //Setup navController with NavigationView
+        NavController navController = Navigation.findNavController(this, R.id.myNavHostFragment);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
 
-        public viewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0: return new WantRideFragment().newinstance(position);
-                case 1: return new GetRideFragment().newinstance(position);
-                case 2: return new ProfileFragment().newinstance(position);
-                default: return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return count;
-        }
     }
 }

@@ -33,7 +33,6 @@
             android:id="@+id/text_layout_email"
             style="@style/SignUpTextInputLayout"
             android:hint="@string/email"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_logo">
@@ -49,7 +48,6 @@
             style="@style/SignUpTextInputLayout"
             android:layout_marginTop="8dp"
             android:hint="@string/password"
-            app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_layout_email"
@@ -69,6 +67,7 @@
             android:layout_margin="16dp"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
+            android:onClick="@{() -> viewmodel.forgotPassword()}"
             android:text="@string/forgot_password"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,20 +76,13 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_submit"
-            android:onClick="@{() -> viewmodel.submitEmailPassword()}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/FabSubmitStyle"
             android:layout_marginTop="124dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_horizontal"
-            app:backgroundTint="@color/green"
-            app:fabCustomSize="72dp"
+            android:onClick="@{() -> viewmodel.submitEmailPassword()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
-            app:srcCompat="@drawable/ic_check" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

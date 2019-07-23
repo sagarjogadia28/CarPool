@@ -41,4 +41,5 @@
     <string name="request_ride">Request ride</string>
     <string name="profile_of_the_user">Profile of the user</string>
     <string name="or">OR</string>
+    <string name="name">Name</string>
 </resources>
