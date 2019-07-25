@@ -9,6 +9,7 @@
     <color name="dark_blue">#013557</color>
     <color name="input_background">#93B8D1</color>
     <color name="green">#1EC364</color>
+    <color name="bottom_bar_color">#63879F</color>
     <color name="light_gray">#AED6F1 </color>
     <color name="raiv_blue">#5DADE2</color>
 </resources>
