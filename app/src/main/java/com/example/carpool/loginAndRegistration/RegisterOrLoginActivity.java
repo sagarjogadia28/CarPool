@@ -3,10 +3,12 @@ package com.example.carpool.loginAndRegistration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.carpool.FirstScreen;
 import com.example.carpool.R;
 import com.example.carpool.databinding.ActivityRegisterOrLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -15,8 +17,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import static com.example.carpool.Constants.RC_SIGN_IN;
 
@@ -60,7 +64,8 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and go to MainActivity if user is already signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            //Goto MainActivity
+            //Goto FirstScreen Activity
+            startActivity(new Intent(this, FirstScreen.class));
         }
     }
 
@@ -73,11 +78,32 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try { // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-//                firebaseAuthWithGoogle(account);
+                if (account != null)
+                    firebaseAuthWithGoogle(account);
+
             } catch (ApiException e) { // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign-in failed: ", e);
             }
         }
+    }
+
+    //Sign in with Google
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success");
+                        startActivity(new Intent(RegisterOrLoginActivity.this, FirstScreen.class));
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.d(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(RegisterOrLoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     //Called when the login button is clicked
