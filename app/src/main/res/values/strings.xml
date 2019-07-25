@@ -43,6 +43,12 @@
     <string name="name">Name</string>
     <string name="current_location_icon">Current location icon</string>
     <string name="destination_location_icon">Destination location icon</string>
+    <string name="city_state">City, State</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="select_a_time">Select a time</string>
+    <string name="total_available_seats">Total available seats</string>
+    <string name="your_address">Your address</string>
+    <string name="enter_destination">Enter destination</string>
     <string name="search_ride">Search Ride</string>
     <string name="going_from">Going From</string>
     <string name="going_to">Going To</string>

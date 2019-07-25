@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".loginAndRegistration.LoginFirebase" />
         <activity android:name=".FirstScreen" />
         <activity android:name=".loginAndRegistration.LoginActivity" />
         <activity android:name=".onBoarding.CustomIntro" />

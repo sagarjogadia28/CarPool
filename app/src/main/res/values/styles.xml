@@ -82,4 +82,24 @@
         <item name="srcCompat">@drawable/ic_check</item>
     </style>
 
+    <style name="OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="hintTextColor">@color/outlined_box_selected</item>
+        <item name="startIconTint">@android:color/white</item>
+        <item name="android:textColorHint">@color/bottom_bar_color</item>
+        <item name="boxStrokeColor">@color/outlined_box_selected</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="OutlinedBoxEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
