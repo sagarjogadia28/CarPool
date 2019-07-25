@@ -6,21 +6,19 @@ import java.sql.Time;
 public class RideAdsContent {
 
     private String departureCity;
-    private String departureAddress;
     private String destinationCity;
-    private Time departureTime;
-    private Date departureDate;
+    private String departureTime;
+    private String departureDate;
     private int seatsAvailable;
     private String userID;
-    private Date postingDate;
+    private String postingDate;
 
     public RideAdsContent(){
 
     }
 
-    public RideAdsContent(String departureCity, String departureAddress, String destinationCity, Time departureTime, Date departureDate, int seatsAvailable, String userID, Date postingDate) {
+    public RideAdsContent(String departureCity, String destinationCity, String departureTime, String departureDate, int seatsAvailable, String userID, String postingDate) {
         this.departureCity = departureCity;
-        this.departureAddress = departureAddress;
         this.destinationCity = destinationCity;
         this.departureTime = departureTime;
         this.departureDate = departureDate;
@@ -37,14 +35,6 @@ public class RideAdsContent {
         this.departureCity = departureCity;
     }
 
-    public String getDepartureAddress() {
-        return departureAddress;
-    }
-
-    public void setDepartureAddress(String departureAddress) {
-        this.departureAddress = departureAddress;
-    }
-
     public String getDestinationCity() {
         return destinationCity;
     }
@@ -53,19 +43,19 @@ public class RideAdsContent {
         this.destinationCity = destinationCity;
     }
 
-    public Time getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Time departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
-    public Date getDepartureDate() {
+    public String getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(Date departureDate) {
+    public void setDepartureDate(String departureDate) {
         this.departureDate = departureDate;
     }
 
@@ -85,11 +75,11 @@ public class RideAdsContent {
         this.userID = userID;
     }
 
-    public Date getPostingDate() {
+    public String getPostingDate() {
         return postingDate;
     }
 
-    public void setPostingDate(Date postingDate) {
+    public void setPostingDate(String postingDate) {
         this.postingDate = postingDate;
     }
 }

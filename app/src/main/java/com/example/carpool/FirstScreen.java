@@ -1,6 +1,7 @@
 package com.example.carpool;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.carpool.RideActionActivities.PostRide;
 import com.example.carpool.generated.callback.OnClickListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,7 +53,9 @@ public class FirstScreen extends AppCompatActivity {
             public boolean onMenuItemSelected(MenuItem menuItem) {
 
                 switch (menuItem.getItemId()){
-                    case R.id.first_screen_fab_menu_post_ride: return true;
+                    case R.id.first_screen_fab_menu_post_ride:
+                        startActivity(new Intent(FirstScreen.this, PostRide.class));
+                        return true;
                     case R.id.first_screen_fab_menu_search: return true;
                     default: return true;
                 }
@@ -67,6 +71,7 @@ public class FirstScreen extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        super.onStop();
         finish();
     }
 

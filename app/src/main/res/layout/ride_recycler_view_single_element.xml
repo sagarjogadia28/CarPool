@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="32dp"
-    app:cardBackgroundColor="@color/light_gray">
+    app:cardBackgroundColor="@color/light_gray"
+    android:id="@+id/rides_single_element_parent_view">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

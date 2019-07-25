@@ -5,11 +5,13 @@ public class User {
     private String name;
     private String email;
     private String phone;
+    private float rating;
 
-    public User(String name, String email, String phone) {
+    public User(String name, String email, String phone, float rating) {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.rating = rating;
     }
 
     public String getName() {
@@ -34,5 +36,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }

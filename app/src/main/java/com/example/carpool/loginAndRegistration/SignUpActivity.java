@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                         Log.d(TAG, "createUserWithEmail:success");
                         //Add details to the database and go to FirstScreen activity
-                        User user = new User(name, email, phone);
+                        User user = new User(name, email, phone,0);
                         addToDatabase(user);
 
                     } else {
