@@ -93,8 +93,6 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-
-    //TODO: Implement forgot password flow
     public void forgotPassword() {
         Toast.makeText(this, "Forgot password clicked!!", Toast.LENGTH_SHORT).show();
     }
