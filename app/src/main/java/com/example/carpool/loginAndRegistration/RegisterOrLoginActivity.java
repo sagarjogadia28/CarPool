@@ -3,12 +3,10 @@ package com.example.carpool.loginAndRegistration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.example.carpool.FirstScreen;
 import com.example.carpool.R;
 import com.example.carpool.databinding.ActivityRegisterOrLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,10 +15,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
 import static com.example.carpool.Constants.RC_SIGN_IN;
 
@@ -109,10 +105,12 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
     //Called when the login button is clicked
     public void login() {
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     //Called when the sign up button is clicked
     public void signUp() {
         startActivity(new Intent(this, SignUpActivity.class));
+        finish();
     }
 }
