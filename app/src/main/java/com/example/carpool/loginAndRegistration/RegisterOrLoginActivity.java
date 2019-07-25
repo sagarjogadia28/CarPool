@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.carpool.FirstScreen;
 import com.example.carpool.R;
 import com.example.carpool.databinding.ActivityRegisterOrLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -61,6 +62,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             //Goto MainActivity
+            startActivity(new Intent(this, FirstScreen.class));
         }
     }
 
@@ -83,10 +85,12 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
     //Called when the login button is clicked
     public void login() {
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     //Called when the sign up button is clicked
     public void signUp() {
         startActivity(new Intent(this, SignUpActivity.class));
+        finish();
     }
 }
