@@ -1,23 +1,17 @@
 package com.example.carpool;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.carpool.generated.callback.OnClickListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.internal.NavigationMenu;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
-import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
 public class FirstScreen extends AppCompatActivity {
 
@@ -37,7 +31,7 @@ public class FirstScreen extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.myNavHostFragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        //Speeddial fab
+        //Speed dial fab
         fab_button = findViewById(R.id.first_screen_fab);
 
 
@@ -50,10 +44,15 @@ public class FirstScreen extends AppCompatActivity {
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
 
-                switch (menuItem.getItemId()){
-                    case R.id.first_screen_fab_menu_post_ride: return true;
-                    case R.id.first_screen_fab_menu_search: return true;
-                    default: return true;
+                switch (menuItem.getItemId()) {
+                    case R.id.first_screen_fab_menu_post_ride:
+                        PostRideDialogFragment.display(getSupportFragmentManager());
+                        return true;
+                    case R.id.first_screen_fab_menu_search:
+                        RequestRideDialogFragment.display(getSupportFragmentManager());
+                        return true;
+                    default:
+                        return true;
                 }
             }
 
@@ -67,6 +66,7 @@ public class FirstScreen extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        super.onStop();
         finish();
     }
 

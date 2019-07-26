@@ -3,6 +3,7 @@ package com.example.carpool;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.Objects;
@@ -21,11 +22,19 @@ public class Utility {
         return (!TextUtils.isEmpty(number) && number.length() >= 10 && Patterns.PHONE.matcher(number).matches());
     }
 
-    //Hide the keyboard
-    public static void hideKeyboard(Activity activity) {
+    //Hide the keyboard in activity
+    public static void hideKeyboardInActivity(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
         if (activity.getCurrentFocus() != null && inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
+        }
+    }
+
+    //Hide the keyboard in fragments
+    public static void hideKeyboardInFragment(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

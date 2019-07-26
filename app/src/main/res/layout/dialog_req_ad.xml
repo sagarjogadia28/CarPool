@@ -6,7 +6,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.carpool.PostRideDialogFragment" />
+            type="com.example.carpool.RequestRideDialogFragment" />
     </data>
 
     <LinearLayout
@@ -20,37 +20,65 @@
         android:orientation="vertical">
 
         <ImageView
+            android:onClick="@{() -> viewmodel.closeDialog()}"
             android:id="@+id/iv_close_dialog"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="end"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/close_the_dialog"
-            android:onClick="@{() -> viewmodel.closeDialog()}"
             android:rotation="45"
             android:src="@drawable/ic_add" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedBox"
-            android:layout_marginTop="100dp"
-            android:hint="@string/city_state"
+            android:layout_marginTop="64dp"
+            android:hint="@string/your_address"
             app:startIconDrawable="@drawable/ic_my_location">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_current_city"
+                android:id="@+id/edit_text_current_address"
                 style="@style/OutlinedBoxEditText" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedBox"
-            android:hint="@string/city_state"
+            android:layout_marginTop="-10dp"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_my_location"
+            app:startIconTint="@color/blueBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_current_city"
+                style="@style/OutlinedBoxEditText"
+                android:hint="@string/city_state"
+                android:textColorHint="@color/bottom_bar_color" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/OutlinedBox"
+            android:hint="@string/enter_destination"
             app:startIconDrawable="@drawable/ic_destination">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_dest_city"
+                android:id="@+id/edit_text_dest_address"
                 style="@style/OutlinedBoxEditText" />
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/OutlinedBox"
+            android:layout_marginTop="-10dp"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_my_location"
+            app:startIconTint="@color/blueBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_dest_city"
+                style="@style/OutlinedBoxEditText"
+                android:hint="@string/city_state"
+                android:textColorHint="@color/bottom_bar_color" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -62,10 +90,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_date"
                 style="@style/OutlinedBoxEditText"
-                android:inputType="date"
                 android:clickable="false"
+                android:onClick="@{() -> viewmodel.selectDate()}"
                 android:focusable="false"
-                android:onClick="@{() -> viewmodel.selectDate()}" />
+                android:inputType="date" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,10 +105,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_time"
                 style="@style/OutlinedBoxEditText"
-                android:inputType="time"
+                android:onClick="@{() -> viewmodel.selectTime()}"
                 android:clickable="false"
                 android:focusable="false"
-                android:onClick="@{() -> viewmodel.selectTime()}" />
+                android:inputType="time" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,8 +119,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_seats"
-                android:inputType="number"
-                style="@style/OutlinedBoxEditText" />
+                style="@style/OutlinedBoxEditText"
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,18 +128,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="36dp"
+            android:onClick="@{() -> viewmodel.requestRide()}"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/green"
-            android:onClick="@{() -> viewmodel.postRide()}"
             android:padding="16dp"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"
-            android:text="@string/post_ride"
+            android:text="@string/request_ride"
             android:textColor="@color/blueBackground"
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="24dp" />
 
     </LinearLayout>
-
 </layout>
