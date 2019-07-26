@@ -1,5 +1,6 @@
 package com.example.carpool.Adapters;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,11 @@ public class RidesRecyclerViewAdapter extends RecyclerView.Adapter<RidesRecycler
     private static final String TAG = "RidesRecyclerViewAdapte";
 
     public ArrayList<RideAdsContent> rideAdsList;
+    private Context context;
 
-    public RidesRecyclerViewAdapter(ArrayList<RideAdsContent> rideAdsList) {
+    public RidesRecyclerViewAdapter(ArrayList<RideAdsContent> rideAdsList, Context context) {
         this.rideAdsList = rideAdsList;
+        this.context = context;
     }
 
     @NonNull

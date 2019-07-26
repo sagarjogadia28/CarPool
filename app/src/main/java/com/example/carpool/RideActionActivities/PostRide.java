@@ -1,10 +1,13 @@
 package com.example.carpool.RideActionActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -14,9 +17,11 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.carpool.FirstScreen;
 import com.example.carpool.R;
 import com.example.carpool.modelClasses.RideAdsContent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +40,7 @@ public class PostRide extends AppCompatActivity implements TimePickerDialog.OnTi
     private Button departureTimeBtn;
     private DatePicker departureDatePicker;
     private FloatingActionButton submitBtn;
+    private ConstraintLayout parentview;
 
     //Creating variables for date and time
     private String departureTime;
@@ -68,6 +74,8 @@ public class PostRide extends AppCompatActivity implements TimePickerDialog.OnTi
         departureTimeBtn = findViewById(R.id.departure_time_picker_button);
         departureDatePicker = findViewById(R.id.departure_date_picker);
         submitBtn = findViewById(R.id.post_ride_submitbtn);
+
+        parentview = findViewById(R.id.post_ride_parentView);
 
         departureTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +155,10 @@ public class PostRide extends AppCompatActivity implements TimePickerDialog.OnTi
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "addToDatabase:success");
+
+                        Toast.makeText(this, "Ride Posted Successfully", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(this, FirstScreen.class));
                     } else {
                         Log.d(TAG, "addToDatabase:failure", task.getException());
                         Toast.makeText(PostRide.this, "Registration failed.", Toast.LENGTH_SHORT).show();

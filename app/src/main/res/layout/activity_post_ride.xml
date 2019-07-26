@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RideActionActivities.PostRide"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:id="@+id/post_ride_parentView">
 
     <ImageView
         android:layout_width="32dp"
