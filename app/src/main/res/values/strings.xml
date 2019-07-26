@@ -50,8 +50,8 @@
     <string name="your_address">Your address</string>
     <string name="enter_destination">Enter destination</string>
     <string name="search_ride">Search Ride</string>
-    <string name="close_the_dialog">Close the dialog</string>
     <string name="going_from">Going From</string>
     <string name="going_to">Going To</string>
     <string name="seats_available">Seats Available</string>
+    <string name="close_the_dialog">Close the dialog</string>
 </resources>
