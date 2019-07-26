@@ -24,7 +24,6 @@
     <string name="Phone_no">Phone No. </string>
     <string name="enter_email_id">Enter email id</string>
     <string name="confirm_password">Confirm Password</string>
-
     <string name="sign_up">SIGN UP</string>
     <string name="app_logo">This is the app logo</string>
     <string name="email">Email</string>
@@ -52,4 +51,7 @@
     <string name="enter_destination">Enter destination</string>
     <string name="search_ride">Search Ride</string>
     <string name="close_the_dialog">Close the dialog</string>
+    <string name="going_from">Going From</string>
+    <string name="going_to">Going To</string>
+    <string name="seats_available">Seats Available</string>
 </resources>
