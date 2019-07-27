@@ -1,62 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:src="@drawable/ic_profile"
-        android:id="@+id/fragment_profile_image_view"/>
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.carpool.fragmentScreens.ProfileFragment" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:background="@color/blueBackground">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_marginTop="16dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/close_the_dialog"
+            android:onClick="@{() -> viewmodel.closeDialog()}"
+            android:rotation="45"
+            android:src="@drawable/ic_add"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/iv_user_profile"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_user_profile"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:contentDescription="@string/profile_of_the_user"
+            android:onClick="@{() -> viewmodel.selectProfileImage()}"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.089999974" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/outline_box_color"
+            android:textSize="32sp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user_profile"
+            tools:layout_editor_absoluteX="0dp"
+            tools:text="Sagar Jogadia" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            tools:layout_editor_absoluteX="6dp" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedBox"
+                    android:layout_marginTop="32dp"
+                    app:boxStrokeColor="@color/outline_box_color"
+                    app:startIconDrawable="@drawable/ic_email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_email"
+                        style="@style/OutlinedBoxEditText"
+                        android:enabled="false"
+                        android:textColor="@color/outline_box_color"
+                        tools:text="sagarjogadia28@gmail.com" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedBox"
+                    app:boxStrokeColor="@color/outline_box_color"
+                    app:startIconDrawable="@drawable/ic_phone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_phone_number"
+                        style="@style/OutlinedBoxEditText"
+                        android:enabled="false"
+                        android:inputType="phone"
+                        android:textColor="@color/outline_box_color"
+                        tools:text="+1-226-759-2214" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedBox"
+                    app:boxStrokeColor="@color/outline_box_color"
+                    app:startIconDrawable="@drawable/ic_rides">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_total_rides"
+                        style="@style/OutlinedBoxEditText"
+                        android:enabled="false"
+                        android:textColor="@color/outline_box_color"
+                        tools:text="24" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedBox"
+                    app:boxStrokeColor="@color/outline_box_color"
+                    app:startIconDrawable="@drawable/ic_rating">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_rating"
+                        style="@style/OutlinedBoxEditText"
+                        android:enabled="false"
+                        android:textColor="@color/outline_box_color"
+                        tools:text="4.5" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/green"
+            android:onClick="@{() -> viewmodel.editDetails()}"
             android:src="@drawable/ic_mode_edit_black_24dp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:useCompatPadding="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/profile_name_tv"
-                android:textSize="32sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/profile_email_tv"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/profile_phone_tv"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/profile_rating_tv"/>
-
-        </LinearLayout>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_submit_changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/green"
+            android:onClick="@{() -> viewmodel.submitDetails()}"
+            android:text="@string/submit"
+            android:visibility="invisible"
+            app:icon="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</layout>

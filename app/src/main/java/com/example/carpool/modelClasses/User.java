@@ -6,12 +6,17 @@ public class User {
     private String email;
     private String phone;
     private float rating;
+    private int totalRides;
 
-    public User(String name, String email, String phone, float rating) {
+    public User(String name, String email, String phone, float rating, int totalRides) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.rating = rating;
+        this.totalRides = totalRides;
+    }
+
+    public User() {
     }
 
     public String getName() {
@@ -44,5 +49,14 @@ public class User {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+
+    public int getTotalRides() {
+        return totalRides;
+    }
+
+    public void setTotalRides(int totalRides) {
+        this.totalRides = totalRides;
     }
 }
