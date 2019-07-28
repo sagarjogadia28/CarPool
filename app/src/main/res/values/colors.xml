@@ -16,4 +16,5 @@
     <color name="outlined_box_selected">#DFDFDF</color>
     <color name="light_gray">#AED6F1 </color>
     <color name="raiv_blue">#5DADE2</color>
+    <color name="mask_view">#A6000000</color>
 </resources>

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,15 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.carpool.databinding.DialogPostAdBinding;
+import com.example.carpool.modelClasses.RideAdsContent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -29,6 +36,14 @@ public class PostRideDialogFragment extends DialogFragment {
     private static final String TAG = PostRideDialogFragment.class.getName();
     private DialogPostAdBinding binding;
     private final Calendar calendar = Calendar.getInstance();
+    private FirebaseUser mFirebaseUser;
+
+    //Format of date and time
+    private static final String dateFormat = "dd-MM-yyyy";
+    private static final String timeFormat = "hh:mm a";
+
+    //Firebase database reference
+    private DatabaseReference databaseReference;
 
     //Open the dialog fragment to fill the details
     public static void display(FragmentManager fragmentManager) {
@@ -50,53 +65,57 @@ public class PostRideDialogFragment extends DialogFragment {
             Utility.hideKeyboardInFragment(view1);
             return false;
         });
+
+        //Get current logged-in user
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //Get database reference
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("RideAd");
         return view;
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(PostRideDialogFragment.STYLE_NORMAL, R.style.FullScreenDialog);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            Window window = dialog.getWindow();
-            if (window != null) {
-                window.setLayout(width, height);
-                window.setWindowAnimations(R.style.SlideAnimation);
-            }
-
-        }
     }
 
     //Called when post ride button is clicked
     public void postRide() {
 
+        //Get all the details entered by the user
         String currentCity = Objects.requireNonNull(binding.editTextCurrentCity.getText()).toString();
         String destinationCity = Objects.requireNonNull(binding.editTextDestCity.getText()).toString();
         String date = Objects.requireNonNull(binding.editTextDate.getText()).toString();
         String time = Objects.requireNonNull(binding.editTextTime.getText()).toString();
         String totalSeats = Objects.requireNonNull(binding.editTextSeats.getText()).toString();
 
+        //If all the details are not valid, then return
         if (!detailsValid(currentCity, destinationCity, date, time, totalSeats))
             return;
 
-        //TODO: Add details to the database
-        Toast.makeText(getActivity(), "Details are valid!!", Toast.LENGTH_SHORT).show();
+        //Get current date and add to firebase database
+        String postingDate = new SimpleDateFormat(dateFormat, Locale.getDefault()).format(new Date());
+        RideAdsContent rideAdsContent = new RideAdsContent(
+                currentCity,
+                destinationCity,
+                time,
+                date,
+                Integer.valueOf(totalSeats),
+                mFirebaseUser.getUid().toString(),
+                postingDate);
+
+        addToDatabase(rideAdsContent);
+    }
+
+    private void addToDatabase(RideAdsContent rideAdsContent) {
+        databaseReference
+                .child(rideAdsContent.getUserID() + rideAdsContent.getPostingDate())
+                .setValue(rideAdsContent)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "addToDatabase:success");
+                        dismiss();
+                    } else {
+                        Log.d(TAG, "addToDatabase:failure", task.getException());
+                        Toast.makeText(getActivity(), "Add cannot be posted.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private boolean detailsValid(String currentCity, String destinationCity, String date, String time, String totalSeats) {
@@ -146,36 +165,73 @@ public class PostRideDialogFragment extends DialogFragment {
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                 (view, hourOfDay, minute1) -> {
-                    String am_pm = (hourOfDay < 12) ? "AM" : "PM";
-                    hourOfDay = hourOfDay % 13;
-                    binding.editTextTime.setText(String.format(Locale.CANADA, "%02d : %02d %s", hourOfDay, minute1, am_pm));
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(timeFormat, Locale.CANADA);
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute1);
+                    String formattedTime = simpleDateFormat.format(calendar.getTime());
+                    String time = formattedTime.replace("a.m", "A.M").replace("p.m", "P.M");
+                    binding.editTextTime.setText(time);
                 }, hour, minute, false);
         timePickerDialog.show();
     }
 
     //Create the date picker
     public void selectDate() {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog.OnDateSetListener date = (datePicker, i, i1, i2) -> {
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
             updateLabel();
         };
 
-        new DatePickerDialog(Objects.requireNonNull(getActivity()), date, calendar
-                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show();
-
+        new DatePickerDialog(Objects.requireNonNull(getActivity()),
+                dateSetListener,
+                currentYear,
+                currentMonth,
+                currentDay
+        ).show();
     }
 
     //Set the format of the date
     private void updateLabel() {
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        //String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
         binding.editTextDate.setText(sdf.format(calendar.getTime()));
+    }
+
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(PostRideDialogFragment.STYLE_NORMAL, R.style.FullScreenDialog);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            Window window = dialog.getWindow();
+            if (window != null) {
+                window.setLayout(width, height);
+                window.setWindowAnimations(R.style.SlideAnimation);
+            }
+
+        }
     }
 }

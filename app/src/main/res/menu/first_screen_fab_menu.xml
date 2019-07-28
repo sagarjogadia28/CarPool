@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/search_ride"
-        android:icon="@drawable/ic_search_white_24dp"
-        android:id="@+id/first_screen_fab_menu_search"/>
+    <item
+        android:title="@string/request_ride"
+        android:icon="@drawable/ic_my_ride"
+        android:id="@+id/first_screen_fab_menu_request_ride" />
 
     <item android:title="@string/post_ride"
-        android:icon="@drawable/ic_post_ride_white_24dp"
+        android:icon="@drawable/ic_rides"
         android:id="@+id/first_screen_fab_menu_post_ride"/>
 
 </menu>
