@@ -71,7 +71,7 @@ public class PostRideDialogFragment extends DialogFragment {
 
         //Get database reference
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("RideAd");
+        databaseReference = firebaseDatabase.getReference(Constants.RIDE_POSTED_NODE);
         return view;
     }
 
@@ -199,7 +199,6 @@ public class PostRideDialogFragment extends DialogFragment {
 
     //Set the format of the date
     private void updateLabel() {
-        //String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
         binding.editTextDate.setText(sdf.format(calendar.getTime()));
     }

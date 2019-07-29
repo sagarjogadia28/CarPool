@@ -1,27 +1,48 @@
 package com.example.carpool.modelClasses;
 
-public class RideAdsContent {
+public class RequestedRideContent {
 
+    private String departureAddress;
     private String departureCity;
+    private String destinationAddress;
     private String destinationCity;
     private String departureTime;
     private String departureDate;
-    private int seatsAvailable;
+    private int seatsNeeded;
     private String userID;
     private String postingDate;
 
-    public RideAdsContent() {
-
+    public RequestedRideContent() {
     }
 
-    public RideAdsContent(String departureCity, String destinationCity, String departureTime, String departureDate, int seatsAvailable, String userID, String postingDate) {
+
+    public RequestedRideContent(
+            String departureAddress,
+            String departureCity,
+            String destinationAddress,
+            String destinationCity,
+            String departureTime,
+            String departureDate,
+            int seatsNeeded,
+            String userID,
+            String postingDate) {
+        this.departureAddress = departureAddress;
         this.departureCity = departureCity;
+        this.destinationAddress = destinationAddress;
         this.destinationCity = destinationCity;
         this.departureTime = departureTime;
         this.departureDate = departureDate;
-        this.seatsAvailable = seatsAvailable;
+        this.seatsNeeded = seatsNeeded;
         this.userID = userID;
         this.postingDate = postingDate;
+    }
+
+    public String getDepartureAddress() {
+        return departureAddress;
+    }
+
+    public void setDepartureAddress(String departureAddress) {
+        this.departureAddress = departureAddress;
     }
 
     public String getDepartureCity() {
@@ -30,6 +51,14 @@ public class RideAdsContent {
 
     public void setDepartureCity(String departureCity) {
         this.departureCity = departureCity;
+    }
+
+    public String getDestinationAddress() {
+        return destinationAddress;
+    }
+
+    public void setDestinationAddress(String destinationAddress) {
+        this.destinationAddress = destinationAddress;
     }
 
     public String getDestinationCity() {
@@ -56,12 +85,12 @@ public class RideAdsContent {
         this.departureDate = departureDate;
     }
 
-    public int getSeatsAvailable() {
-        return seatsAvailable;
+    public int getSeatsNeeded() {
+        return seatsNeeded;
     }
 
-    public void setSeatsAvailable(int seatsAvailable) {
-        this.seatsAvailable = seatsAvailable;
+    public void setSeatsNeeded(int seatsNeeded) {
+        this.seatsNeeded = seatsNeeded;
     }
 
     public String getUserID() {

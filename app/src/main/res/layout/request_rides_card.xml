@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_margin="16dp"
     app:cardBackgroundColor="@color/input_background"
     app:cardCornerRadius="24dp"
     app:cardPreventCornerOverlap="true">
@@ -79,8 +80,8 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_bottom_corner"
             android:gravity="center"
-            android:padding="14dp"
-            android:textSize="24sp"
+            android:padding="8dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/tv_dest_address"
             tools:text="12th April, 07:00 P.M" />
@@ -106,6 +107,31 @@
             app:layout_constraintStart_toStartOf="@+id/tv_dest_location"
             app:layout_constraintTop_toBottomOf="@+id/tv_dest_location"
             tools:text="939 Mabelle Ave, M1R2B9" />
+
+        <ImageView
+            android:id="@+id/iv_seat_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/tv_date_time"
+            app:layout_constraintEnd_toStartOf="@+id/tv_no_of_seats"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/tv_current_location"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_seat" />
+
+        <TextView
+            android:id="@+id/tv_no_of_seats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blueBackground"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_seat_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_seat_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_seat_icon"
+            tools:text="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

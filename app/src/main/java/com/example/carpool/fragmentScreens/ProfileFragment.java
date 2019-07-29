@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.carpool.Constants;
 import com.example.carpool.R;
 import com.example.carpool.Utility;
 import com.example.carpool.databinding.FragmentProfileBinding;
@@ -83,7 +84,7 @@ public class ProfileFragment extends Fragment {
                 .into(profileImage);
 
         //Database Reference
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference(Constants.USER_NODE);
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert mFirebaseUser != null;
 
