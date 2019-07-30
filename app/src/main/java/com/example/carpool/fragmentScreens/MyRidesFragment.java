@@ -37,6 +37,8 @@ public class MyRidesFragment extends Fragment {
 
     public static final String TAG = MyRidesFragment.class.getName();
     private ArrayList<Object> myRidesList = new ArrayList<>();
+    private ArrayList<RideAdsContent> postedRidesList = new ArrayList<>();
+    private ArrayList<RequestedRideContent> requestedRidesList = new ArrayList<>();
     private MyRidesAdapter adapter;
 
     @Nullable
@@ -111,14 +113,18 @@ public class MyRidesFragment extends Fragment {
         requestedRidesReference.orderByKey().startAt(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                requestedRidesList.clear();
                 for (DataSnapshot singleAd : dataSnapshot.getChildren()) {
                     RequestedRideContent requestedRideContent = singleAd.getValue(RequestedRideContent.class);
                     Log.d(TAG, "onDataChange: REQUESTED called");
                     if (requestedRideContent != null) {
-                        myRidesList.add(requestedRideContent);
+                        requestedRidesList.add(requestedRideContent);
                         Log.d(TAG, "onDataChange: REQUESTED: " + requestedRideContent.toString());
                     }
                 }
+                myRidesList.clear();
+                myRidesList.addAll(requestedRidesList);
+                myRidesList.addAll(postedRidesList);
                 adapter.notifyDataSetChanged();
             }
 
@@ -133,14 +139,18 @@ public class MyRidesFragment extends Fragment {
         postedRidesReference.orderByKey().startAt(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postedRidesList.clear();
                 for (DataSnapshot singleAd : dataSnapshot.getChildren()) {
                     RideAdsContent rideAd = singleAd.getValue(RideAdsContent.class);
                     Log.d(TAG, "onDataChange: POSTED called");
                     if (rideAd != null) {
-                        myRidesList.add(rideAd);
+                        postedRidesList.add(rideAd);
                         Log.d(TAG, "onDataChange: POSTED: " + rideAd.toString());
                     }
                 }
+                myRidesList.clear();
+                myRidesList.addAll(postedRidesList);
+                myRidesList.addAll(requestedRidesList);
                 adapter.notifyDataSetChanged();
             }
 

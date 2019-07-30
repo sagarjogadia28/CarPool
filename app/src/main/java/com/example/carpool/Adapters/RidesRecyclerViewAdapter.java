@@ -1,6 +1,6 @@
 package com.example.carpool.Adapters;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,63 +18,53 @@ import java.util.ArrayList;
 
 public class RidesRecyclerViewAdapter extends RecyclerView.Adapter<RidesRecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "RidesRecyclerViewAdapte";
+    private static final String TAG = RidesRecyclerViewAdapter.class.getName();
 
-    public ArrayList<RideAdsContent> rideAdsList;
-    private Context context;
+    private ArrayList<RideAdsContent> rideAdsList;
 
-    public RidesRecyclerViewAdapter(ArrayList<RideAdsContent> rideAdsList, Context context) {
+    public RidesRecyclerViewAdapter(ArrayList<RideAdsContent> rideAdsList) {
         this.rideAdsList = rideAdsList;
-        this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ride_recycler_view_single_element,parent,false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rides_card, parent, false);
+        return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        RideAdsContent ride = rideAdsList.get(position);
+        if (ride != null) {
+            holder.destinationCity.setText(ride.getDestinationCity());
+            holder.departureCity.setText(ride.getDepartureCity());
+            holder.dateTime.setText(ride.getDepartureDate() + ", " + ride.getDepartureTime());
+            holder.totalSeats.setText(String.valueOf(ride.getSeatsAvailable()));
 
-        Log.d(TAG, "onBindViewHolder: called");
-
-        holder.departureTimeTV.setText(rideAdsList.get(position).getDepartureCity());
-        holder.destinationTV.setText(rideAdsList.get(position).getDestinationCity());
-        holder.departureTimeTV.setText(rideAdsList.get(position).getDepartureTime().toString());
-        holder.departureDateTV.setText(rideAdsList.get(position).getDepartureDate().toString());
-        holder.seatsAvailableTV.setText(rideAdsList.get(position).getSeatsAvailable());
-
-        holder.parentCaredView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: ");
-            }
-        });
+            holder.parentCardView.setOnClickListener(view -> Log.d(TAG, "onClick: "));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return rideAdsList.size();
+        return (rideAdsList == null) ? 0 : rideAdsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView parentCaredView;
-        TextView destinationTV, departureTV, departureTimeTV, departureDateTV, seatsAvailableTV;
+        CardView parentCardView;
+        TextView departureCity, destinationCity, totalSeats, dateTime;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            parentCaredView = itemView.findViewById(R.id.rides_single_element_parent_view);
-            departureTV = itemView.findViewById(R.id.departure_text_view);
-            destinationTV = itemView.findViewById(R.id.destination_text_view);
-            departureDateTV = itemView.findViewById(R.id.departure_date_tv);
-            departureTimeTV = itemView.findViewById(R.id.departure_time_tv);
-
+            parentCardView = itemView.findViewById(R.id.cv_posted_ride);
+            departureCity = itemView.findViewById(R.id.tv_current_location);
+            destinationCity = itemView.findViewById(R.id.tv_dest_location);
+            totalSeats = itemView.findViewById(R.id.tv_no_of_seats);
+            dateTime = itemView.findViewById(R.id.tv_date_time);
         }
     }
 
