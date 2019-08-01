@@ -1,4 +1,4 @@
-package com.example.carpool;
+package com.example.carpool.dialogFragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -18,6 +18,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.carpool.Constants;
+import com.example.carpool.R;
+import com.example.carpool.Utility;
 import com.example.carpool.databinding.DialogPostAdBinding;
 import com.example.carpool.modelClasses.RideAdsContent;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,15 +100,16 @@ public class PostRideDialogFragment extends DialogFragment {
                 time,
                 date,
                 Integer.valueOf(totalSeats),
-                mFirebaseUser.getUid().toString(),
-                postingDate);
+                mFirebaseUser.getUid(),
+                postingDate
+        );
 
         addToDatabase(rideAdsContent);
     }
 
     private void addToDatabase(RideAdsContent rideAdsContent) {
         databaseReference
-                .child(rideAdsContent.getUserID() + rideAdsContent.getPostingDate())
+                .child(rideAdsContent.getUserID() + rideAdsContent.getDepartureDate() + rideAdsContent.getDepartureTime())
                 .setValue(rideAdsContent)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -145,9 +149,12 @@ public class PostRideDialogFragment extends DialogFragment {
             valid = false;
         }
 
-        //Check if total seats is empty
+        //Check if total seats is not empty and greater than zero
         if (totalSeats.isEmpty()) {
             binding.editTextSeats.setError("Please enter total seats available");
+            valid = false;
+        } else if (Integer.valueOf(totalSeats) <= 0) {
+            binding.editTextSeats.setError("Please enter valid total seats available");
             valid = false;
         }
         return valid;
@@ -170,7 +177,7 @@ public class PostRideDialogFragment extends DialogFragment {
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute1);
                     String formattedTime = simpleDateFormat.format(calendar.getTime());
-                    String time = formattedTime.replace("a.m", "A.M").replace("p.m", "P.M");
+                    String time = formattedTime.replace("a.m.", "AM").replace("p.m.", "PM");
                     binding.editTextTime.setText(time);
                 }, hour, minute, false);
         timePickerDialog.show();

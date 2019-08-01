@@ -8,5 +8,7 @@ public interface Constants {
     int RC_CHANGE_PHOTO = 3;
     String USER_NODE = "Users";
     String RIDE_POSTED_NODE = "RideAd";
-    String RIDE_REQUESTED_NODE = "RideReq";
+    String PASSENGERS_NODE = "PassengersOfRide";
+    String POSTED_RIDE_CONTENTS = "posted_ride_contents";
+    String CONFIRMED_RIDES_NODE = "ConfirmedRides";
 }

@@ -1,4 +1,4 @@
-package com.example.carpool.Adapters;
+package com.example.carpool.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.R;
-import com.example.carpool.modelClasses.RequestedRideContent;
+import com.example.carpool.modelClasses.Passenger;
 import com.example.carpool.modelClasses.RideAdsContent;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,14 +19,13 @@ import java.util.ArrayList;
 
 public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    //Contains requested and posted rides of the user
+    //Contains confirmed and posted rides of the user
     private ArrayList<Object> myRidesList;
-    private final int POSTED_RIDE = 0, REQUESTED_RIDE = 1;
+    private final int POSTED_RIDE = 0;
 
     public MyRidesAdapter(ArrayList<Object> myRidesList) {
         this.myRidesList = myRidesList;
     }
-
 
     @NotNull
     @Override
@@ -35,47 +34,39 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        //If value is POSTED_RIDE, then inflate posted ride card else requested ride card
-        switch (viewType) {
-            case POSTED_RIDE:
-                View postedView = inflater.inflate(R.layout.rides_card, parent, false);
-                viewHolder = new MyPostedRides(postedView);
-                break;
-            case REQUESTED_RIDE:
-                View requestView = inflater.inflate(R.layout.request_rides_card, parent, false);
-                viewHolder = new MyRequestedRides(requestView);
-                break;
-            default:
-                return null;
+        //If value is POSTED_RIDE, then inflate posted ride card else confirmed ride card
+        if (viewType == POSTED_RIDE) {
+            View postedView = inflater.inflate(R.layout.rides_card, parent, false);
+            viewHolder = new MyPostedRides(postedView);
+        } else {
+            View requestView = inflater.inflate(R.layout.request_rides_card, parent, false);
+            viewHolder = new MyConfirmedRides(requestView);
         }
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (holder.getItemViewType()) {
-            case POSTED_RIDE:
-                MyPostedRides myPostedRides = (MyPostedRides) holder;
-                configurePostedRides(myPostedRides, position);
-                break;
-            case REQUESTED_RIDE:
-                MyRequestedRides myRequestedRides = (MyRequestedRides) holder;
-                configureRequestedRides(myRequestedRides, position);
-                break;
+        if (holder.getItemViewType() == POSTED_RIDE) {
+            MyPostedRides myPostedRides = (MyPostedRides) holder;
+            configurePostedRides(myPostedRides, position);
+        } else {
+            MyConfirmedRides myConfirmedRides = (MyConfirmedRides) holder;
+            configureConfirmedRides(myConfirmedRides, position);
         }
     }
 
-    //Set all the values in requested ride card
+    //Set all the values in confirmed ride card
     @SuppressLint("SetTextI18n")
-    private void configureRequestedRides(MyRequestedRides myRequestedRides, int position) {
-        RequestedRideContent requestedRide = (RequestedRideContent) myRidesList.get(position);
-        if (requestedRide != null) {
-            myRequestedRides.departureCity.setText(requestedRide.getDepartureCity());
-            myRequestedRides.departureAddress.setText(requestedRide.getDepartureAddress());
-            myRequestedRides.destinationCity.setText(requestedRide.getDestinationCity());
-            myRequestedRides.destinationAddress.setText(requestedRide.getDestinationAddress());
-            myRequestedRides.dateTime.setText(requestedRide.getDepartureDate() + ", " + requestedRide.getDepartureTime());
-            myRequestedRides.totalSeats.setText(String.valueOf(requestedRide.getSeatsNeeded()));
+    private void configureConfirmedRides(MyConfirmedRides myConfirmedRides, int position) {
+        Passenger passenger = (Passenger) myRidesList.get(position);
+        if (passenger != null) {
+            myConfirmedRides.departureCity.setText(passenger.getDepartureCity());
+            myConfirmedRides.departureAddress.setText(passenger.getDepartureAddress());
+            myConfirmedRides.destinationCity.setText(passenger.getDestinationCity());
+            myConfirmedRides.destinationAddress.setText(passenger.getDestinationAddress());
+            myConfirmedRides.dateTime.setText(passenger.getDepartureDate() + ", " + passenger.getDepartureTime());
+            myConfirmedRides.totalSeats.setText(String.valueOf(passenger.getSeatsNeeded()));
         }
     }
 
@@ -100,8 +91,8 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public int getItemViewType(int position) {
         if (myRidesList.get(position) instanceof RideAdsContent)
             return POSTED_RIDE;
-        else if (myRidesList.get(position) instanceof RequestedRideContent)
-            return REQUESTED_RIDE;
+        else if (myRidesList.get(position) instanceof Passenger)
+            return 1;
         return -1;
     }
 
@@ -120,12 +111,12 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    //ViewHolder for requested rides by logged-in user
-    class MyRequestedRides extends RecyclerView.ViewHolder {
+    //ViewHolder for confirmed rides by logged-in user
+    class MyConfirmedRides extends RecyclerView.ViewHolder {
 
         TextView departureCity, departureAddress, destinationCity, destinationAddress, totalSeats, dateTime;
 
-        MyRequestedRides(@NonNull View itemView) {
+        MyConfirmedRides(@NonNull View itemView) {
             super(itemView);
             departureAddress = itemView.findViewById(R.id.tv_current_address);
             departureCity = itemView.findViewById(R.id.tv_current_location);

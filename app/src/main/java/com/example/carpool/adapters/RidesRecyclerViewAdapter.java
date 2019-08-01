@@ -1,17 +1,21 @@
-package com.example.carpool.Adapters;
+package com.example.carpool.adapters;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.carpool.Constants;
 import com.example.carpool.R;
+import com.example.carpool.dialogFragments.ConfirmRideDialogFragment;
 import com.example.carpool.modelClasses.RideAdsContent;
 
 import java.util.ArrayList;
@@ -19,11 +23,12 @@ import java.util.ArrayList;
 public class RidesRecyclerViewAdapter extends RecyclerView.Adapter<RidesRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = RidesRecyclerViewAdapter.class.getName();
-
+    private Context context;
     private ArrayList<RideAdsContent> rideAdsList;
 
-    public RidesRecyclerViewAdapter(ArrayList<RideAdsContent> rideAdsList) {
+    public RidesRecyclerViewAdapter(ArrayList<RideAdsContent> rideAdsList, Context context) {
         this.rideAdsList = rideAdsList;
+        this.context = context;
     }
 
     @NonNull
@@ -43,7 +48,13 @@ public class RidesRecyclerViewAdapter extends RecyclerView.Adapter<RidesRecycler
             holder.dateTime.setText(ride.getDepartureDate() + ", " + ride.getDepartureTime());
             holder.totalSeats.setText(String.valueOf(ride.getSeatsAvailable()));
 
-            holder.parentCardView.setOnClickListener(view -> Log.d(TAG, "onClick: "));
+            holder.parentCardView.setOnClickListener(view -> {
+                ConfirmRideDialogFragment confirmRideDialogFragment = new ConfirmRideDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.POSTED_RIDE_CONTENTS, ride);
+                confirmRideDialogFragment.setArguments(bundle);
+                confirmRideDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), TAG);
+            });
         }
     }
 

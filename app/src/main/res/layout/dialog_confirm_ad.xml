@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewmodel"
-            type="com.example.carpool.RequestRideDialogFragment" />
+            type="com.example.carpool.dialogFragments.ConfirmRideDialogFragment" />
     </data>
 
     <LinearLayout
@@ -91,7 +90,6 @@
                 android:id="@+id/edit_text_date"
                 style="@style/OutlinedBoxEditText"
                 android:clickable="false"
-                android:onClick="@{() -> viewmodel.selectDate()}"
                 android:focusable="false"
                 android:inputType="date" />
 
@@ -105,7 +103,6 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_time"
                 style="@style/OutlinedBoxEditText"
-                android:onClick="@{() -> viewmodel.selectTime()}"
                 android:clickable="false"
                 android:focusable="false"
                 android:inputType="time" />
@@ -114,11 +111,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedBox"
-            android:hint="@string/total_seats_needed"
             app:startIconDrawable="@drawable/ic_seat">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_seats"
+                android:hint="@string/total_seats_needed"
                 style="@style/OutlinedBoxEditText"
                 android:inputType="number" />
 
@@ -128,13 +125,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{() -> viewmodel.requestRide()}"
+            android:onClick="@{() -> viewmodel.confirmRide()}"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/green"
             android:padding="16dp"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"
-            android:text="@string/request_ride"
+            android:text="@string/confirm_ride"
             android:textColor="@color/blueBackground"
             android:textSize="18sp"
             android:textStyle="bold"

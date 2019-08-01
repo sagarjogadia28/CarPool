@@ -12,25 +12,16 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-    <View
-        android:id="@+id/view_mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/mask_view"
-        android:visibility="gone" />
 
-    <io.github.yavski.fabspeeddial.FabSpeedDial
-        android:id="@+id/first_screen_fab"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_post_ride"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabBackgroundTint="@color/green"
-        app:fabDrawableTint="@color/blueBackground"
-        app:fabGravity="bottom_end"
-        app:fabMenu="@menu/first_screen_fab_menu"
+        android:backgroundTint="@color/green"
+        android:src="@drawable/ic_add"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:miniFabBackgroundTint="@color/green"
-        app:miniFabDrawableTint="@color/blueBackground"
         app:useCompatPadding="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

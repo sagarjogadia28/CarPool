@@ -3,7 +3,6 @@ package com.example.carpool.fragmentScreens;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,14 +13,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carpool.Adapters.MyRidesAdapter;
 import com.example.carpool.Constants;
-import com.example.carpool.PostRideDialogFragment;
 import com.example.carpool.R;
-import com.example.carpool.RequestRideDialogFragment;
-import com.example.carpool.modelClasses.RequestedRideContent;
+import com.example.carpool.adapters.MyRidesAdapter;
+import com.example.carpool.dialogFragments.PostRideDialogFragment;
+import com.example.carpool.modelClasses.Passenger;
 import com.example.carpool.modelClasses.RideAdsContent;
-import com.google.android.material.internal.NavigationMenu;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,16 +28,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import io.github.yavski.fabspeeddial.FabSpeedDial;
+import java.util.Map;
 
 public class MyRidesFragment extends Fragment {
 
     public static final String TAG = MyRidesFragment.class.getName();
     private ArrayList<Object> myRidesList = new ArrayList<>();
     private ArrayList<RideAdsContent> postedRidesList = new ArrayList<>();
-    private ArrayList<RequestedRideContent> requestedRidesList = new ArrayList<>();
+    private ArrayList<Passenger> confirmedRidesList = new ArrayList<>();
     private MyRidesAdapter adapter;
+    private DatabaseReference passengersOfRideReference;
 
     @Nullable
     @Override
@@ -47,9 +45,8 @@ public class MyRidesFragment extends Fragment {
 
         //Initialize the views
         View view = inflater.inflate(R.layout.fragment_my_rides, container, false);
-        FabSpeedDial fabButton = view.findViewById(R.id.first_screen_fab);
+        FloatingActionButton fab = view.findViewById(R.id.fab_post_ride);
         RecyclerView recyclerView = view.findViewById(R.id.rv_my_rides);
-        View maskView = view.findViewById(R.id.view_mask);
 
         //Get the logged-in user
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
@@ -63,76 +60,74 @@ public class MyRidesFragment extends Fragment {
 
         //Get the posted and requested rides of user from firebase database
         DatabaseReference postedRidesReference = FirebaseDatabase.getInstance().getReference(Constants.RIDE_POSTED_NODE);
-        DatabaseReference requestedRidesReference = FirebaseDatabase.getInstance().getReference(Constants.RIDE_REQUESTED_NODE);
+        DatabaseReference confirmedRidesReference = FirebaseDatabase.getInstance().getReference(Constants.CONFIRMED_RIDES_NODE);
+        passengersOfRideReference = FirebaseDatabase.getInstance().getReference(Constants.PASSENGERS_NODE);
 
         //Populate the recycler view with the values
         getPostedRidesByUser(userId, postedRidesReference);
-        getRequestedRidesByUser(userId, requestedRidesReference);
+        getConfirmedRidesByUser(userId, confirmedRidesReference);
 
-        //Set behaviour of fab menu
-        setFabOnClickListener(fabButton, maskView);
+        fab.setOnClickListener(view1 -> PostRideDialogFragment.display(getFragmentManager()));
 
         return view;
     }
 
-    //Called when fab is clicked
-    private void setFabOnClickListener(FabSpeedDial fabButton, View maskView) {
-        fabButton.setMenuListener(new FabSpeedDial.MenuListener() {
-            @Override
-            public boolean onPrepareMenu(NavigationMenu navigationMenu) {
-                //Show black masking screen when fab menu is opened
-                maskView.setVisibility(View.VISIBLE);
-                return true;
-            }
+    //Search for a node in "ConfirmedRides" with value of logged-in user uid = Will give all the rides confirmed by the user
+    //For each ride by the user, get all the details by accessing "PassengersOfRide" node
+    private void getConfirmedRidesByUser(String userId, DatabaseReference confirmedRidesReference) {
+        confirmedRidesReference
+                .orderByKey()
+                .startAt(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @SuppressWarnings("unchecked")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-            @Override
-            public boolean onMenuItemSelected(MenuItem menuItem) {
-                //Hide black masking screen when fab menu item is selected
-                maskView.setVisibility(View.GONE);
-                switch (menuItem.getItemId()) {
-                    case R.id.first_screen_fab_menu_post_ride:
-                        PostRideDialogFragment.display(getFragmentManager());
-                        return true;
-                    case R.id.first_screen_fab_menu_request_ride:
-                        RequestRideDialogFragment.display(getFragmentManager());
-                        return true;
-                    default:
-                        return true;
-                }
-            }
+                        for (DataSnapshot singleAd : dataSnapshot.getChildren()) {
+                            Map<String, String> map = (Map<String, String>) singleAd.getValue();
+                            if (map != null) {
+                                for (String value : map.values())
+                                    getIndividualRideDetails(userId, value);
+                            }
 
-            @Override
-            public void onMenuClosed() {
-                //Hide black masking screen when fab menu is closed
-                maskView.setVisibility(View.GONE);
-            }
-        });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
     }
 
-    private void getRequestedRidesByUser(String userId, DatabaseReference requestedRidesReference) {
-        requestedRidesReference.orderByKey().startAt(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                requestedRidesList.clear();
-                for (DataSnapshot singleAd : dataSnapshot.getChildren()) {
-                    RequestedRideContent requestedRideContent = singleAd.getValue(RequestedRideContent.class);
-                    Log.d(TAG, "onDataChange: REQUESTED called");
-                    if (requestedRideContent != null) {
-                        requestedRidesList.add(requestedRideContent);
-                        Log.d(TAG, "onDataChange: REQUESTED: " + requestedRideContent.toString());
-                    }
-                }
-                myRidesList.clear();
-                myRidesList.addAll(requestedRidesList);
-                myRidesList.addAll(postedRidesList);
-                adapter.notifyDataSetChanged();
-            }
+    //Get all the details entered by the user
+    private void getIndividualRideDetails(String userId, String node) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: Requested ride => " + databaseError.getMessage());
-            }
-        });
+        passengersOfRideReference
+                .child(node)
+                .orderByChild("userID")
+                .equalTo(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                            Passenger passenger = keyNode.getValue(Passenger.class);
+                            if (passenger != null) {
+                                confirmedRidesList.add(passenger);
+                            }
+                        }
+                        myRidesList.clear();
+                        myRidesList.addAll(confirmedRidesList);
+                        myRidesList.addAll(postedRidesList);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+                    }
+                });
+
     }
 
     private void getPostedRidesByUser(String userId, DatabaseReference postedRidesReference) {
@@ -150,7 +145,7 @@ public class MyRidesFragment extends Fragment {
                 }
                 myRidesList.clear();
                 myRidesList.addAll(postedRidesList);
-                myRidesList.addAll(requestedRidesList);
+                myRidesList.addAll(confirmedRidesList);
                 adapter.notifyDataSetChanged();
             }
 

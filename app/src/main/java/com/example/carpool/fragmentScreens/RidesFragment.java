@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carpool.Adapters.RidesRecyclerViewAdapter;
 import com.example.carpool.Constants;
 import com.example.carpool.R;
+import com.example.carpool.adapters.RidesRecyclerViewAdapter;
 import com.example.carpool.modelClasses.RideAdsContent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +52,7 @@ public class RidesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        adapter = new RidesRecyclerViewAdapter(rideList);
+        adapter = new RidesRecyclerViewAdapter(rideList, getActivity());
         recyclerView.setAdapter(adapter);
 
         //Get all the posted rides from firebase
@@ -71,7 +71,11 @@ public class RidesFragment extends Fragment {
                     RideAdsContent rideAd = singleAd.getValue(RideAdsContent.class);
 
                     //If ride is not null and not posted by logged-in user then add to the list
-                    if (rideAd != null && !rideAd.getUserID().equals(usedId)) {
+                    if (rideAd != null) {
+                        Log.d(TAG, "onDataChange: ID = " + rideAd.getUserID());
+                        Log.d(TAG, "onDataChange: Seats = " + rideAd.getSeatsAvailable());
+                    }
+                    if (rideAd != null && !rideAd.getUserID().equals(usedId) && rideAd.getSeatsAvailable() > 0) {
                         rideList.add(rideAd);
                     }
                 }
