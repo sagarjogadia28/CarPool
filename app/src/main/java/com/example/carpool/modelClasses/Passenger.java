@@ -1,6 +1,9 @@
 package com.example.carpool.modelClasses;
 
-public class Passenger {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Passenger implements Parcelable {
 
     private String departureAddress;
     private String departureCity;
@@ -10,6 +13,30 @@ public class Passenger {
     private String departureDate;
     private int seatsNeeded;
     private String userID;
+
+    protected Passenger(Parcel in) {
+        departureAddress = in.readString();
+        departureCity = in.readString();
+        destinationAddress = in.readString();
+        destinationCity = in.readString();
+        departureTime = in.readString();
+        departureDate = in.readString();
+        seatsNeeded = in.readInt();
+        userID = in.readString();
+        driverID = in.readString();
+    }
+
+    public static final Creator<Passenger> CREATOR = new Creator<Passenger>() {
+        @Override
+        public Passenger createFromParcel(Parcel in) {
+            return new Passenger(in);
+        }
+
+        @Override
+        public Passenger[] newArray(int size) {
+            return new Passenger[size];
+        }
+    };
 
     public String getDepartureAddress() {
         return departureAddress;
@@ -98,5 +125,23 @@ public class Passenger {
 
     public void setDepartureDate(String departureDate) {
         this.departureDate = departureDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(departureAddress);
+        parcel.writeString(departureCity);
+        parcel.writeString(destinationAddress);
+        parcel.writeString(destinationCity);
+        parcel.writeString(departureTime);
+        parcel.writeString(departureDate);
+        parcel.writeInt(seatsNeeded);
+        parcel.writeString(userID);
+        parcel.writeString(driverID);
     }
 }

@@ -9,6 +9,8 @@ public interface Constants {
     String USER_NODE = "Users";
     String RIDE_POSTED_NODE = "RideAd";
     String PASSENGERS_NODE = "PassengersOfRide";
-    String POSTED_RIDE_CONTENTS = "posted_ride_contents";
     String CONFIRMED_RIDES_NODE = "ConfirmedRides";
+    String POSTED_RIDE_CONTENTS = "posted_ride_contents";
+    String CONFIRMED_RIDE_CONTENTS = "confirmed_ride_contents";
+
 }

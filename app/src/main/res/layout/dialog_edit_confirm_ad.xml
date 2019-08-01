@@ -6,7 +6,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.carpool.dialogFragments.PostRideDialogFragment" />
+            type="com.example.carpool.dialogFragments.EditConfirmedRideDialogFragment" />
     </data>
 
     <LinearLayout
@@ -32,25 +32,53 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedBox"
-            android:layout_marginTop="100dp"
-            android:hint="@string/city_state"
+            android:layout_marginTop="64dp"
+            android:hint="@string/your_address"
             app:startIconDrawable="@drawable/ic_my_location">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_current_city"
+                android:id="@+id/edit_text_current_address"
                 style="@style/OutlinedBoxEditText" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedBox"
-            android:hint="@string/city_state"
+            android:layout_marginTop="-10dp"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_my_location"
+            app:startIconTint="@color/blueBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_current_city"
+                style="@style/OutlinedBoxEditText"
+                android:hint="@string/city_state"
+                android:textColorHint="@color/bottom_bar_color" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/OutlinedBox"
+            android:hint="@string/enter_destination"
             app:startIconDrawable="@drawable/ic_destination">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_dest_city"
+                android:id="@+id/edit_text_dest_address"
                 style="@style/OutlinedBoxEditText" />
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/OutlinedBox"
+            android:layout_marginTop="-10dp"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_my_location"
+            app:startIconTint="@color/blueBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_dest_city"
+                style="@style/OutlinedBoxEditText"
+                android:hint="@string/city_state"
+                android:textColorHint="@color/bottom_bar_color" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -64,8 +92,7 @@
                 style="@style/OutlinedBoxEditText"
                 android:clickable="false"
                 android:focusable="false"
-                android:inputType="date"
-                android:onClick="@{() -> viewmodel.selectDate()}" />
+                android:inputType="date" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,40 +106,38 @@
                 style="@style/OutlinedBoxEditText"
                 android:clickable="false"
                 android:focusable="false"
-                android:inputType="time"
-                android:onClick="@{() -> viewmodel.selectTime()}" />
+                android:inputType="time" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedBox"
-            android:hint="@string/total_available_seats"
             app:startIconDrawable="@drawable/ic_seat">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_seats"
                 style="@style/OutlinedBoxEditText"
+                android:hint="@string/total_seats_needed"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirm_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:id="@+id/btn_post_ride"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/green"
-            android:onClick="@{() -> viewmodel.postRide()}"
+            android:onClick="@{() -> viewmodel.confirmRide()}"
             android:padding="16dp"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"
-            android:text="@string/post_ride"
+            android:text="@string/submit"
             android:textColor="@color/blueBackground"
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="24dp" />
 
     </LinearLayout>
-
 </layout>

@@ -71,10 +71,6 @@ public class RidesFragment extends Fragment {
                     RideAdsContent rideAd = singleAd.getValue(RideAdsContent.class);
 
                     //If ride is not null and not posted by logged-in user then add to the list
-                    if (rideAd != null) {
-                        Log.d(TAG, "onDataChange: ID = " + rideAd.getUserID());
-                        Log.d(TAG, "onDataChange: Seats = " + rideAd.getSeatsAvailable());
-                    }
                     if (rideAd != null && !rideAd.getUserID().equals(usedId) && rideAd.getSeatsAvailable() > 0) {
                         rideList.add(rideAd);
                     }

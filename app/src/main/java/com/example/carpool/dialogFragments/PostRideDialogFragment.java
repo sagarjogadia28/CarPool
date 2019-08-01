@@ -63,6 +63,21 @@ public class PostRideDialogFragment extends DialogFragment {
         View view = binding.getRoot();
         binding.setViewmodel(this);
 
+
+        //Get the parcelable bundle
+        if (getArguments() != null) {
+            Bundle bundle = getArguments();
+            RideAdsContent ride = bundle.getParcelable(Constants.POSTED_RIDE_CONTENTS);
+            if (ride != null) {
+                binding.editTextCurrentCity.setText(ride.getDepartureCity());
+                binding.editTextDestCity.setText(ride.getDestinationCity());
+                binding.editTextDate.setText(ride.getDepartureDate());
+                binding.editTextTime.setText(ride.getDepartureTime());
+                binding.editTextSeats.setText(String.valueOf(ride.getSeatsAvailable()));
+                binding.btnPostRide.setText(getString(R.string.submit));
+            }
+        }
+
         //Hide the keyboard when clicked on the parent layout
         binding.parent.setOnTouchListener((view1, motionEvent) -> {
             Utility.hideKeyboardInFragment(view1);

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.example.carpool.dialogFragments.ConfirmRideDialogFragment" />
@@ -19,13 +20,13 @@
         android:orientation="vertical">
 
         <ImageView
-            android:onClick="@{() -> viewmodel.closeDialog()}"
             android:id="@+id/iv_close_dialog"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="end"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/close_the_dialog"
+            android:onClick="@{() -> viewmodel.closeDialog()}"
             android:rotation="45"
             android:src="@drawable/ic_add" />
 
@@ -115,19 +116,20 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_seats"
-                android:hint="@string/total_seats_needed"
                 style="@style/OutlinedBoxEditText"
+                android:hint="@string/total_seats_needed"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirm_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{() -> viewmodel.confirmRide()}"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/green"
+            android:onClick="@{() -> viewmodel.confirmRide()}"
             android:padding="16dp"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"

@@ -1,15 +1,22 @@
 package com.example.carpool.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.carpool.Constants;
 import com.example.carpool.R;
+import com.example.carpool.dialogFragments.EditConfirmedRideDialogFragment;
+import com.example.carpool.dialogFragments.PostRideDialogFragment;
 import com.example.carpool.modelClasses.Passenger;
 import com.example.carpool.modelClasses.RideAdsContent;
 
@@ -22,8 +29,11 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     //Contains confirmed and posted rides of the user
     private ArrayList<Object> myRidesList;
     private final int POSTED_RIDE = 0;
+    private Context context;
+    public static final String TAG = MyRidesAdapter.class.getName();
 
-    public MyRidesAdapter(ArrayList<Object> myRidesList) {
+    public MyRidesAdapter(Context context, ArrayList<Object> myRidesList) {
+        this.context = context;
         this.myRidesList = myRidesList;
     }
 
@@ -67,6 +77,14 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             myConfirmedRides.destinationAddress.setText(passenger.getDestinationAddress());
             myConfirmedRides.dateTime.setText(passenger.getDepartureDate() + ", " + passenger.getDepartureTime());
             myConfirmedRides.totalSeats.setText(String.valueOf(passenger.getSeatsNeeded()));
+
+            myConfirmedRides.parent.setOnClickListener(view -> {
+                EditConfirmedRideDialogFragment editConfirmedRideDialogFragment = new EditConfirmedRideDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.CONFIRMED_RIDE_CONTENTS, passenger);
+                editConfirmedRideDialogFragment.setArguments(bundle);
+                editConfirmedRideDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), TAG);
+            });
         }
     }
 
@@ -79,6 +97,14 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             myPostedRides.destinationCity.setText(rideAdsContent.getDestinationCity());
             myPostedRides.dateTime.setText(rideAdsContent.getDepartureDate() + ", " + rideAdsContent.getDepartureTime());
             myPostedRides.totalSeats.setText(String.valueOf(rideAdsContent.getSeatsAvailable()));
+
+            myPostedRides.parent.setOnClickListener(view -> {
+                PostRideDialogFragment postRideDialogFragment = new PostRideDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.POSTED_RIDE_CONTENTS, rideAdsContent);
+                postRideDialogFragment.setArguments(bundle);
+                postRideDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), TAG);
+            });
         }
     }
 
@@ -100,10 +126,12 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class MyPostedRides extends RecyclerView.ViewHolder {
 
         TextView departureCity, destinationCity, totalSeats, dateTime;
+        CardView parent;
 
         MyPostedRides(@NonNull View itemView) {
             super(itemView);
 
+            parent = itemView.findViewById(R.id.cv_posted_ride);
             departureCity = itemView.findViewById(R.id.tv_current_location);
             destinationCity = itemView.findViewById(R.id.tv_dest_location);
             totalSeats = itemView.findViewById(R.id.tv_no_of_seats);
@@ -115,9 +143,12 @@ public class MyRidesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class MyConfirmedRides extends RecyclerView.ViewHolder {
 
         TextView departureCity, departureAddress, destinationCity, destinationAddress, totalSeats, dateTime;
+        CardView parent;
 
         MyConfirmedRides(@NonNull View itemView) {
             super(itemView);
+
+            parent = itemView.findViewById(R.id.cv_confirmed_ride);
             departureAddress = itemView.findViewById(R.id.tv_current_address);
             departureCity = itemView.findViewById(R.id.tv_current_location);
             destinationAddress = itemView.findViewById(R.id.tv_dest_address);

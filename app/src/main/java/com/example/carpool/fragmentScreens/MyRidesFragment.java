@@ -55,7 +55,7 @@ public class MyRidesFragment extends Fragment {
         //Initialize the recycler view and set the adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new MyRidesAdapter(myRidesList);
+        adapter = new MyRidesAdapter(getActivity(), myRidesList);
         recyclerView.setAdapter(adapter);
 
         //Get the posted and requested rides of user from firebase database
